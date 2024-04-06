@@ -1,4 +1,4 @@
-import { _decorator, Component, misc, Node } from 'cc';
+import { _decorator, Component, misc, Node, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('CameraMovement')
@@ -14,9 +14,16 @@ export class CameraMovement extends Component {
     update(deltaTime: number) {
         let boy_position = this.BoyPlayer.getPosition();
         let girl_position = this.GirlPlayer.getPosition();
-        let cam_position = this.node.getPosition();
-        cam_position.lerp(boy_position, 0.1);
-        cam_position.y = misc.clampf(boy_position.y,0,220);
+
+        let midpoint = new Vec3(
+            (boy_position.x + girl_position.x) / 2,
+            (boy_position.y + girl_position.y) / 2,
+            0
+        );
+
+        let cam_position = this.node.position.clone();
+        cam_position.lerp(midpoint, 0.1);
+        cam_position.y = Math.max(midpoint.y,0);
         this.node.setPosition(cam_position);
     }
 }

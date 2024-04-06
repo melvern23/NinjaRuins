@@ -6,30 +6,42 @@ export class Game_Control extends Component {
     @property({type:Node})BoyPlayer:Node;
     @property({type:Node})GirlPlayer:Node;
     @property({type:CCInteger})movement_speed;
-    movement_direction = 0;
-    boy_position = new Vec3;
-    girl_position = new Vec3;
+    boy_movement_direction = 0;
+    girl_movement_direction = 0;
+    boy_position = new Vec3(-540,-140,0);
+    girl_position = new Vec3(-470,-140,0);
 
     onLoad(){
         input.on(Input.EventType.KEY_DOWN,this.onKeyDown,this);
-        input.on(Input.EventType.KEY_DOWN,this.onKeyUp,this);
+        input.on(Input.EventType.KEY_UP,this.onKeyUp,this);
         this.movement_speed = 200;
 
     }
     onKeyDown(event: EventKeyboard){
         switch(event.keyCode){
             case KeyCode.KEY_A:
-                this.movement_direction = -1;
+                this.boy_movement_direction = -1;
             break;
             case KeyCode.KEY_D:
-                this.movement_speed = 1;
-
+                this.boy_movement_direction = 1;
+                break;
+            case KeyCode.ARROW_LEFT:
+                this.girl_movement_direction = -1;
+            break;
+            case KeyCode.ARROW_RIGHT:
+                this.girl_movement_direction = 1;
         }
     }
     onKeyUp(event: EventKeyboard){
         switch(event.keyCode){
-            case KeyCode.KEY_A||KeyCode.KEY_D:  
-            this.movement_direction = 0;
+            case KeyCode.KEY_A:
+            case KeyCode.KEY_D:                 
+                this.boy_movement_direction = 0;
+                break;
+            case KeyCode.ARROW_LEFT:
+            case KeyCode.ARROW_RIGHT: 
+                this.girl_movement_direction = 0;
+                break;
         }
     }
 
@@ -38,8 +50,10 @@ export class Game_Control extends Component {
     }
 
     update(deltaTime: number) {
-        this.boy_position.x += this.movement_direction * this.movement_speed *deltaTime;
+        this.boy_position.x += this.boy_movement_direction * this.movement_speed * deltaTime;
+        this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
         this.BoyPlayer.position = this.boy_position;
+        this.GirlPlayer.position = this.girl_position;
     }
 }
 

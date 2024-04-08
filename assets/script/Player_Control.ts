@@ -37,6 +37,8 @@ export class Game_Control extends Component {
         switch(event.keyCode){
             case KeyCode.KEY_A:
                 this.boy_movement_direction = -1;
+                this.boy_animation.play('boy_back');
+                break;
             break;
             case KeyCode.KEY_D:
                 this.boy_movement_direction = 1;
@@ -52,10 +54,11 @@ export class Game_Control extends Component {
 
             case KeyCode.ARROW_LEFT:
                 this.girl_movement_direction = -1;
+                this.girl_animation.play('girl_back');
             break;
             case KeyCode.ARROW_RIGHT:
                 this.girl_movement_direction = 1;
-                this.girl_animation.play();
+                this.girl_animation.play('girl_run');
                 break;
             case KeyCode.ARROW_UP:
                 this.girl_animation.play('girl_jump');

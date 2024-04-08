@@ -14,7 +14,6 @@ export class CameraMovement extends Component {
     update(deltaTime: number) {
         let boy_position = this.BoyPlayer.getPosition();
         let girl_position = this.GirlPlayer.getPosition();
-
         let midpoint = new Vec3(
             (boy_position.x + girl_position.x) / 2,
             (boy_position.y + girl_position.y) / 2,
@@ -22,10 +21,15 @@ export class CameraMovement extends Component {
         );
 
         let cam_position = this.node.position.clone();
+        cam_position.y = misc.clampf(midpoint.y,0,0);
+        cam_position.x = misc.clampf(midpoint.x,0,2560)
         cam_position.lerp(midpoint, 0.1);
-        cam_position.y = Math.max(midpoint.y,0);
         this.node.setPosition(cam_position);
     }
 }
 
-
+// let target_position = this.BoyPlayer.getPosition();
+// target_position.y = misc.clampf(target_position.y,0,230);
+// let current_position = this.node.getPosition();
+// current_position.lerp(target_position, 0.1, current_position);
+// this.node.setPosition(current_position);

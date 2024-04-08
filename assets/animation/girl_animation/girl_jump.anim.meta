@@ -2,12 +2,12 @@
   "ver": "2.0.3",
   "importer": "animation-clip",
   "imported": true,
-  "uuid": "49bbe3f7-0881-4054-b5a4-deb4a5214901",
+  "uuid": "f063aae3-35a6-4afa-8ae2-8af70c136a26",
   "files": [
     ".cconb"
   ],
   "subMetas": {},
   "userData": {
-    "name": "boy_run_animation"
+    "name": "girl_jump"
   }
 }

@@ -21,9 +21,9 @@ export class CameraMovement extends Component {
         );
 
         let cam_position = this.node.position.clone();
-        cam_position.y = misc.clampf(midpoint.y,0,0);
-        cam_position.x = misc.clampf(midpoint.x,0,2560)
-        cam_position.lerp(midpoint, 0.1);
+        cam_position.y = misc.clampf(midpoint.y,0,0); // memaksimalkan dan meminimumkan posisi kamera di sumbu y
+        cam_position.x = misc.clampf(midpoint.x,0,2560) // memaksimalkan dan meminimumkan posisi kamera di sumbu x
+        cam_position.lerp(midpoint, 0.1); // memperlambat pergerakan camera ketika memenuhi posisi midpoint 
         this.node.setPosition(cam_position);
     }
 }

@@ -30,28 +30,26 @@ export class Game_Control extends Component {
         this.jump_height = 25000;
 
         this.boy_animation = this.boy_player.getComponent(Animation);
-        this.girl_animation = this.girl_player.getComponent(Animation);
+
 
         this.boy_rigid = this.boy_player.getComponent(RigidBody2D);
-        this.girl_rigid = this.girl_player.getComponent(RigidBody2D);
+
 
         this.boy_collider = this.boy_player.getComponent(Collider2D);
+
+        this.girl_animation = this.girl_player.getComponent(Animation);
+        this.girl_rigid = this.girl_player.getComponent(RigidBody2D);
         this.girl_collider = this.girl_player.getComponent(Collider2D);
     }
     onKeyDown(event: EventKeyboard){
         switch(event.keyCode){
             case KeyCode.KEY_A:
-                this.checkCollision();
-                if(this.boy_movement_direction === 0 ){
-                    this.boy_animation.stop;
-                    return;
-                }
                 this.boy_movement_direction = -1;
                 this.boy_animation.play('boy_back');
                 break;
             break;
             case KeyCode.KEY_D:
-                this.checkCollision();
+                //this.checkCollision();
                 if(this.boy_movement_direction === 0 ){
                     this.boy_animation.stop;
                     return;
@@ -100,15 +98,15 @@ export class Game_Control extends Component {
         }
     }
 
-    checkCollision(){ // collision agar sesama player tidak menabrak
-        if(this.boy_collider && this.girl_collider){
-            let boyBox = this.boy_collider.worldAABB;
-            let girlBox = this.boy_collider.worldAABB;
-            if(boyBox.intersects(girlBox)) {
-                this.boy_movement_direction = 0;
-            }
-        }
-    }
+    // checkCollision(){ // collision agar sesama player tidak menabrak
+    //     if(this.boy_collider && this.girl_collider){
+    //         let boyBox = this.boy_collider.worldAABB;
+    //         let girlBox = this.boy_collider.worldAABB;
+    //         if(boyBox.intersects(girlBox)) {
+    //             this.boy_movement_direction = 0;
+    //         }
+    //     }
+    // }
 
     start() {
 
@@ -116,12 +114,15 @@ export class Game_Control extends Component {
 
     update(deltaTime: number) {
 
-        // this.boy_rigid.linearVelocity = v2(this.boy_movement_direction * this.movement_speed * deltaTime, this.boy_rigid.linearVelocity.y);
-        // this.girl_rigid.linearVelocity = v2(this.girl_movement_direction * this.movement_speed * deltaTime, this.girl_rigid.linearVelocity.y);
+        this.boy_rigid.linearVelocity = v2(this.boy_movement_direction * this.movement_speed * deltaTime, this.boy_rigid.linearVelocity.y);
+
         this.boy_position.x += this.boy_movement_direction * this.movement_speed * deltaTime;
-        this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
+
         this.boy_player.position = this.boy_position;
-        this.girl_player.position = this.girl_position;
+
+        this.girl_rigid.linearVelocity = v2(this.girl_movement_direction * this.movement_speed * deltaTime, this.girl_rigid.linearVelocity.y);
+        this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
+        this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
     }
 }
 

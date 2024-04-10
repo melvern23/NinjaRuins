@@ -700,7 +700,7 @@
       "__id__": 8
     },
     "movement_speed": 10,
-    "jump_height": 50,
+    "jump_height": 5000,
     "_id": "fa3qDyilFP1pNy0b2E7bZp"
   },
   {

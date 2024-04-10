@@ -27,14 +27,10 @@ export class Game_Control extends Component {
         input.on(Input.EventType.KEY_UP,this.onKeyUp,this);
 
         this.movement_speed = 500;
-        this.jump_height = 25000;
+        this.jump_height = 15000;
 
         this.boy_animation = this.boy_player.getComponent(Animation);
-
-
         this.boy_rigid = this.boy_player.getComponent(RigidBody2D);
-
-
         this.boy_collider = this.boy_player.getComponent(Collider2D);
 
         this.girl_animation = this.girl_player.getComponent(Animation);
@@ -43,17 +39,17 @@ export class Game_Control extends Component {
     }
     onKeyDown(event: EventKeyboard){
         switch(event.keyCode){
+            //boy movement
             case KeyCode.KEY_A:
                 this.boy_movement_direction = -1;
                 this.boy_animation.play('boy_back');
                 break;
-            break;
             case KeyCode.KEY_D:
                 //this.checkCollision();
-                if(this.boy_movement_direction === 0 ){
-                    this.boy_animation.stop;
-                    return;
-                }
+                // if(this.boy_movement_direction === 0 ){
+                //     this.boy_animation.stop;
+                //     return;
+                // }
                 this.boy_movement_direction = 1;
                 this.boy_animation.play('boy_run');
                 break;
@@ -62,9 +58,9 @@ export class Game_Control extends Component {
                     this.boy_animation.play('boy_jump');
                     this.boy_rigid.applyForceToCenter(v2(0,this.jump_height),true);
                 }
-
                 break;
 
+            // girl movement
             case KeyCode.ARROW_LEFT:
                 this.girl_movement_direction = -1;
                 this.girl_animation.play('girl_back');
@@ -83,13 +79,14 @@ export class Game_Control extends Component {
     }
     onKeyUp(event: EventKeyboard){
         switch(event.keyCode){
+            //boy movement
             case KeyCode.KEY_A:
             case KeyCode.KEY_D:                 
                 this.boy_movement_direction = 0;
                 this.boy_animation.stop();
                 break;
-            case KeyCode.KEY_W:
 
+            //girl movement
             case KeyCode.ARROW_LEFT:
             case KeyCode.ARROW_RIGHT: 
                 this.girl_movement_direction = 0;
@@ -115,13 +112,9 @@ export class Game_Control extends Component {
     update(deltaTime: number) {
 
         this.boy_rigid.linearVelocity = v2(this.boy_movement_direction * this.movement_speed * deltaTime, this.boy_rigid.linearVelocity.y);
-
         this.boy_position.x += this.boy_movement_direction * this.movement_speed * deltaTime;
 
-        this.boy_player.position = this.boy_position;
-
         this.girl_rigid.linearVelocity = v2(this.girl_movement_direction * this.movement_speed * deltaTime, this.girl_rigid.linearVelocity.y);
-        this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
         this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
     }
 }

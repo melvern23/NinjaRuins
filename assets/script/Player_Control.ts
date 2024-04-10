@@ -56,7 +56,7 @@ export class Game_Control extends Component {
             case KeyCode.KEY_W:
                 if(this.boy_position.y<=-140){
                     this.boy_animation.play('boy_jump');
-                    this.boy_rigid.applyForceToCenter(v2(0,this.jump_height),true);
+                    this.boy_rigid.applyForceToCenter(v2(0,this.jump_height),true); // membuat player bisa lompat dengan parameter y = this.jump_height
                 }
                 break;
 
@@ -72,7 +72,7 @@ export class Game_Control extends Component {
             case KeyCode.ARROW_UP:
                 if(this.girl_position.y<=-140){
                     this.girl_animation.play('girl_jump');
-                    this.girl_rigid.applyForceToCenter(v2(0,this.jump_height),true);
+                    this.girl_rigid.applyForceToCenter(v2(0,this.jump_height),true); // membuat player bisa lompat dengan parameter y = this.jump_height
                 }
                 break;            
         }
@@ -85,13 +85,16 @@ export class Game_Control extends Component {
                 this.boy_movement_direction = 0;
                 this.boy_animation.stop();
                 break;
-
+            // case KeyCode.KEY_W:
+            //     this.boy_animation.stop();
             //girl movement
             case KeyCode.ARROW_LEFT:
             case KeyCode.ARROW_RIGHT: 
                 this.girl_movement_direction = 0;
                 this.boy_animation.stop();
                 break;
+            // case KeyCode.ARROW_UP:
+            //         this.boy_animation.stop();
         }
     }
 

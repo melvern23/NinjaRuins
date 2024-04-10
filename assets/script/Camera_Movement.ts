@@ -18,7 +18,7 @@ export class CameraMovement extends Component {
             (boy_position.x + girl_position.x) / 2,
             (boy_position.y + girl_position.y) / 2,
             0
-        );
+        ); // membuat midpoint
 
         let cam_position = this.node.position.clone();
         cam_position.y = misc.clampf(midpoint.y,0,0); // memaksimalkan dan meminimumkan posisi kamera di sumbu y
@@ -27,9 +27,3 @@ export class CameraMovement extends Component {
         this.node.setPosition(cam_position);
     }
 }
-
-// let target_position = this.BoyPlayer.getPosition();
-// target_position.y = misc.clampf(target_position.y,0,230);
-// let current_position = this.node.getPosition();
-// current_position.lerp(target_position, 0.1, current_position);
-// this.node.setPosition(current_position);

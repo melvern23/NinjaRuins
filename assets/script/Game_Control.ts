@@ -25,11 +25,12 @@ export class Game_Control extends Component {
     girl_rigid : RigidBody2D;
     girl_collider : Collider2D;
     
-    enemy_speed :number = -500;
+    enemy_speed :number = 500;
     monster1_direction = 0;
     monster1_position = new Vec3(280,-140,0);
     monster1_collide:Collider2D;
     monster1_rigid:RigidBody2D;
+    monster1_animation:Animation;
 
     onLoad(){
         input.on(Input.EventType.KEY_DOWN,this.onKeyDown,this);
@@ -41,16 +42,16 @@ export class Game_Control extends Component {
         this.boy_animation = this.boy_player.getComponent(Animation);
         this.boy_rigid = this.boy_player.getComponent(RigidBody2D);
         this.boy_collider = this.boy_player.getComponent(Collider2D);
-        this.boy_jumped = false;
+        //this.boy_jumped = false;
 
         this.girl_animation = this.girl_player.getComponent(Animation);
         this.girl_rigid = this.girl_player.getComponent(RigidBody2D);
         this.girl_collider = this.girl_player.getComponent(Collider2D);
 
         this.monster1.setPosition(this.monster1_position);
+        this.monster1_animation = this.monster1.getComponent(Animation);
         this.monster1_collide = this.monster1.getComponent(Collider2D);
         this.monster1_rigid = this.monster1.getComponent(RigidBody2D);
-        this.monster1_direction
     }
     onKeyDown(event: EventKeyboard){
         switch(event.keyCode){
@@ -69,10 +70,10 @@ export class Game_Control extends Component {
                 this.boy_animation.play('boy_run');
                 break;
             case KeyCode.KEY_W:
-                if(!this.boy_jumped){
+                if(this.boy_position.y <= -140){
                     this.boy_animation.play('boy_jump');
                     this.boy_rigid.applyForceToCenter(v2(0,this.jump_height),true); // membuat player bisa lompat dengan parameter y = this.jump_height
-                    this.boy_jumped = true;
+                    //this.boy_jumped = true;
                 }
                 break;
 
@@ -86,7 +87,7 @@ export class Game_Control extends Component {
                 this.girl_animation.play('girl_run');
                 break;
             case KeyCode.ARROW_UP:
-                if(this.girl_position.y<=-140){
+                if(this.girl_position.y <= -140){
                     this.girl_animation.play('girl_jump');
                     this.girl_rigid.applyForceToCenter(v2(0,this.jump_height),true); // membuat player bisa lompat dengan parameter y = this.jump_height
                 }
@@ -101,9 +102,10 @@ export class Game_Control extends Component {
                 this.boy_movement_direction = 0;
                 this.boy_animation.stop();
                 break;
-            case KeyCode.KEY_W:
-                this.boy_animation.stop();
-                this.boy_jumped = false;
+            // case KeyCode.KEY_W:
+            //     this.boy_animation.stop();
+            //     this.boy_jumped = false;
+
             //girl movement
             case KeyCode.ARROW_LEFT:
             case KeyCode.ARROW_RIGHT: 
@@ -138,16 +140,16 @@ export class Game_Control extends Component {
         this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
 
         this.monster1_rigid.linearVelocity = v2(this.monster1_direction * this.enemy_speed * deltaTime, this.monster1_rigid.linearVelocity.y);
-        this.monster1_position.x += this.enemy_speed * deltaTime;
+        this.monster1_position.x += this.monster1_direction * this.enemy_speed * deltaTime;
 
-        if(this.monster1_position.x <= -640){
-            this.monster1_direction = this.go_right;
+        if((this.boy_position.x >= -250 && this.boy_position.y <=-140)||(this.girl_position.x >= -250 && this.girl_position.y <=-140)){
+            this.monster1_direction = this.go_left;
         }
-        if(this.monster1_position.x >= 3840){
-            this.monster1_direction = this.go_right;
-        }
-        // -640 buat monster berjalan kembali
 
+    }
+
+    enemyTrigger(){
+        
     }
 }
 

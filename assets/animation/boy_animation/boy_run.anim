@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.AnimationClip",
-    "_name": "boy_run_animation",
+    "_name": "boy_run",
     "_objFlags": 0,
     "__editorExtras__": {
       "embeddedPlayerGroups": []
@@ -61,7 +61,7 @@
   {
     "__type__": "cc.ObjectCurve",
     "_times": [
-      0.016666666666666666,
+      0,
       0.1,
       0.2,
       0.3,

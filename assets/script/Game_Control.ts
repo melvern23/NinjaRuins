@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, EventKeyboard, Input, input, KeyCode, Node, Vec3, Animation, RigidBody2D, v2, director, Collider2D, Label } from 'cc';
+import { _decorator, CCInteger, Component, EventKeyboard, Input, input, KeyCode, Node, Vec3, Animation, RigidBody2D, v2, director, Collider2D, Label, ParticleSystem2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Game_Control')
@@ -8,6 +8,7 @@ export class Game_Control extends Component {
     @property({type:Node}) monster1 : Node;
     @property({type:Label}) boy_label : Label;
     @property({type:Label}) girl_label : Label;
+    @property({type:Node}) exit_gate : Node;
     @property({type:CCInteger})movement_speed;
     @property({type:CCInteger})jump_height;
 
@@ -34,6 +35,8 @@ export class Game_Control extends Component {
     monster1_rigid:RigidBody2D;
     monster1_animation:Animation;
 
+    exit_effect : ParticleSystem2D;
+
     onLoad(){
         input.on(Input.EventType.KEY_DOWN,this.onKeyDown,this);
         input.on(Input.EventType.KEY_UP,this.onKeyUp,this);
@@ -58,6 +61,8 @@ export class Game_Control extends Component {
         this.boy_label.node.active = false;
         this.girl_label.node.active = false;
 
+        // this.exit_effect.active
+
         this.showLabel(this.boy_label,this.girl_label);
     }
     onKeyDown(event: EventKeyboard){
@@ -68,11 +73,6 @@ export class Game_Control extends Component {
                 this.boy_animation.play('boy_back');
                 break;
             case KeyCode.KEY_D:
-                //this.checkCollision();
-                // if(this.boy_movement_direction === 0 ){
-                //     this.boy_animation.stop;
-                //     return;
-                // }
                 this.boy_movement_direction = this.go_right;
                 this.boy_animation.play('boy_run');
                 break;
@@ -113,7 +113,7 @@ export class Game_Control extends Component {
             //     this.boy_animation.stop();
             //     this.boy_jumped = false;
 
-            //girl movement
+            // stop girl movement
             case KeyCode.ARROW_LEFT:
             case KeyCode.ARROW_RIGHT: 
                 this.girl_movement_direction = 0;
@@ -123,16 +123,6 @@ export class Game_Control extends Component {
             //         this.boy_animation.stop();
         }
     }
-
-    // checkCollision(){ // collision agar sesama player tidak menabrak
-    //     if(this.boy_collider && this.girl_collider){
-    //         let boyBox = this.boy_collider.worldAABB;
-    //         let girlBox = this.boy_collider.worldAABB;
-    //         if(boyBox.intersects(girlBox)) {
-    //             this.boy_movement_direction = 0;
-    //         }
-    //     }
-    // }
 
     start() {
         
@@ -150,6 +140,7 @@ export class Game_Control extends Component {
         this.monster1_position.x += this.monster1_direction * this.enemy_speed * deltaTime;
 
         if((this.boy_position.x >= -250 && this.boy_position.y <=-140)||(this.girl_position.x >= -250 && this.girl_position.y <=-140)){
+            this.monster1_animation.play('enemies_run');
             this.monster1_direction = this.go_left;
         }
 
@@ -161,7 +152,16 @@ export class Game_Control extends Component {
         this.scheduleOnce(() => {
             this.boy_label.node.active = false;
             this.girl_label.node.active = false;
-        }, 5);
+        }, 3);
+    }
+
+    goNextLevel(){
+        if(this.boy_player.position.x >=2970 && this.girl_player.position.x >=2970){
+            this.exit_effect.scheduleOnce(() =>{
+                this.exit_effect.active;
+            }, 3);
+            director.loadScene('Stage2');
+        }
     }
 
 }

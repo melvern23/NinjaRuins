@@ -34,14 +34,20 @@
       },
       {
         "__id__": 10
+      },
+      {
+        "__id__": 12
+      },
+      {
+        "__id__": 14
       }
     ],
     "_prefab": {
-      "__id__": 12
+      "__id__": 16
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -470,
+      "x": -380,
       "y": -140,
       "z": 0
     },
@@ -162,6 +168,14 @@
       {
         "__uuid__": "f063aae3-35a6-4afa-8ae2-8af70c136a26",
         "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "f0212568-7574-408f-9ba4-b1f0e4dfa3ed",
+        "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "2d24faff-31e3-47d8-a48a-92a0a5d5a66a",
+        "__expectedType__": "cc.AnimationClip"
       }
     ],
     "_defaultClip": {
@@ -186,13 +200,13 @@
     "__prefab": {
       "__id__": 9
     },
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
     "_group": 1,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 1,
+    "_gravityScale": 10,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -243,6 +257,50 @@
     "fileId": "92m49LffFKJ57hZey4D+Sl"
   },
   {
+    "__type__": "61c75v8m8xAb6g88E5ts+Yl",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 13
+    },
+    "player": {
+      "__id__": 1
+    },
+    "genre": "girl",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "6f0iZCt/VKNpgXqxvf5BwS"
+  },
+  {
+    "__type__": "61c75v8m8xAb6g88E5ts+Yl",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 15
+    },
+    "player": {
+      "__id__": 1
+    },
+    "genre": "girl",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "f8eWRWDNlEnJ9PUXtAoZBw"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -251,7 +309,6 @@
       "__id__": 0
     },
     "fileId": "e9Ex0McwBG07rNAXvW45sU",
-    "instance": null,
     "targetOverrides": null
   }
 ]

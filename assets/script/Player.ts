@@ -1,4 +1,4 @@
-import { _decorator, Animation, CCInteger, CCString, Collider2D, Component, EventKeyboard, Input, input, KeyCode, Node, RigidBody2D, v2, Vec3 } from 'cc';
+import { _decorator, Animation, CCInteger, CCString, Collider2D, Component, Contact2DType, EventKeyboard, Input, input, instantiate, IPhysics2DContact, KeyCode, Node, RigidBody2D, v2, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Player')
@@ -22,14 +22,9 @@ export class Player extends Component {
         input.on(Input.EventType.KEY_UP,this.onKeyUp,this);
 
         this.movement_speed = 500;
-        this.jump_height = 15000;
-
-        if(this.genre === "boy"){
-            this.node_position.set(-540,-140,0);
-        } else {
-            this.node_position.set(-380,-140,0);
-        }
-        this.player.setPosition(this.node_position);
+        this.jump_height = 8000;
+        this.setStartPosition();
+        
         this.node_animation = this.node.getComponent(Animation);
         this.node_rigid = this.node.getComponent(RigidBody2D);
         this.node_collider = this.node.getComponent(Collider2D);
@@ -102,13 +97,19 @@ export class Player extends Component {
         }
     }
 
-    start() {
-    }
-
     update(deltaTime: number) {
         this.node_rigid.linearVelocity = v2(this.node_movement_direction * this.movement_speed * deltaTime, this.node_rigid.linearVelocity.y);
         this.node_position.x += this.node_movement_direction * this.movement_speed * deltaTime;
 
+    }
+
+    setStartPosition(){
+        if(this.genre === "boy"){
+            this.node_position.set(-540,-140,0);
+        } else {
+            this.node_position.set(-380,-140,0);
+        }
+        this.player.setPosition(this.node_position);
     }
 
 }

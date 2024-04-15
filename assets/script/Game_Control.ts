@@ -4,31 +4,20 @@ import { Player } from './Player';
 
 @ccclass('Game_Control')
 export class Game_Control extends Component {
-    @property({type:Node})boy_player:Player;
-    @property({type:Node})girl_player:Player;
+    @property({type:Node})Player1:Player;
+    @property({type:Node})Player2:Player;
     @property({type:Node}) monster1 : Node;
     @property({type:Label}) boy_label : Label;
     @property({type:Label}) girl_label : Label;
     @property({type:Node}) exit_gate : Node;
     @property({type:Node}) fences : Node;
-    @property({type:CCInteger})movement_speed: number;
-    @property({type:CCInteger})jump_height : number;
 
     go_left : number = -1;
     go_right: number = 1;
 
-    // boy_movement_direction = 0;
-    // boy_position = new Vec3(-540,-140,0);
-    // boy_animation : Animation;
-    // boy_rigid : RigidBody2D;
-    // boy_collider : Collider2D;
-    // boy_jumped : boolean;
+    boy_player : Player;
+    girl_player : Player;
 
-    // girl_movement_direction = 0;
-    // girl_position = new Vec3(-380,-140,0);
-    // girl_animation : Animation;
-    // girl_rigid : RigidBody2D;
-    // girl_collider : Collider2D;
     
     enemy_speed :number = 500;
     monster1_direction = 0;
@@ -38,23 +27,9 @@ export class Game_Control extends Component {
     monster1_animation:Animation;
 
     exit_effect : ParticleSystem2D;
+    exit_position = new Vec3(2970,-140,0);
 
     onLoad(){
-        // input.on(Input.EventType.KEY_DOWN,this.onKeyDown,this);
-        // input.on(Input.EventType.KEY_UP,this.onKeyUp,this);
-
-        // this.movement_speed = 500;
-        // this.jump_height = 15000;
-
-        // this.boy_animation = this.boy_player.getComponent(Animation);
-        // this.boy_rigid = this.boy_player.getComponent(RigidBody2D);
-        // this.boy_collider = this.boy_player.getComponent(Collider2D);
-        // //this.boy_jumped = false;
-
-        // this.girl_animation = this.girl_player.getComponent(Animation);
-        // this.girl_rigid = this.girl_player.getComponent(RigidBody2D);
-        // this.girl_collider = this.girl_player.getComponent(Collider2D);
-
         this.monster1.setPosition(this.monster1_position);
         this.monster1_animation = this.monster1.getComponent(Animation);
         this.monster1_collide = this.monster1.getComponent(Collider2D);
@@ -64,88 +39,31 @@ export class Game_Control extends Component {
         this.girl_label.node.active = false;
 
         // this.exit_effect.active
-
+        this.contactBoyPlayer();
+        this.contactGirlPlayer();
         this.showLabel(this.boy_label,this.girl_label);
     }
-    // onKeyDown(event: EventKeyboard){
-    //     switch(event.keyCode){
-    //         //boy movement
-    //         case KeyCode.KEY_A:
-    //             this.boy_movement_direction = this.go_left;
-    //             this.boy_animation.play('boy_back');
-    //             break;
-    //         case KeyCode.KEY_D:
-    //             this.boy_movement_direction = this.go_right;
-    //             this.boy_animation.play('boy_run');
-    //             break;
-    //         case KeyCode.KEY_W:
-    //             if(this.boy_position.y <= -140){
-    //                 this.boy_animation.play('boy_jump');
-    //                 this.boy_rigid.applyForceToCenter(v2(0,this.jump_height),true); // membuat player bisa lompat dengan parameter y = this.jump_height
-    //                 //this.boy_jumped = true;
-    //             }
-    //             break;
 
-    //         // girl movement
-    //         case KeyCode.ARROW_LEFT:
-    //             this.girl_movement_direction = this.go_left;
-    //             this.girl_animation.play('girl_back');
-    //             break;
-    //         case KeyCode.ARROW_RIGHT:
-    //             this.girl_movement_direction = this.go_right;
-    //             this.girl_animation.play('girl_run');
-    //             break;
-    //         case KeyCode.ARROW_UP:
-    //             if(this.girl_position.y <= -140){
-    //                 this.girl_animation.play('girl_jump');
-    //                 this.girl_rigid.applyForceToCenter(v2(0,this.jump_height),true); // membuat player bisa lompat dengan parameter y = this.jump_height
-    //             }
-    //             break;            
-    //     }
-    // }
-    // onKeyUp(event: EventKeyboard){
-    //     switch(event.keyCode){
-    //         //boy movement
-    //         case KeyCode.KEY_A:
-    //         case KeyCode.KEY_D:                 
-    //             this.boy_movement_direction = 0;
-    //             this.boy_animation.stop();
-    //             break;
-    //         // case KeyCode.KEY_W:
-    //         //     this.boy_animation.stop();
-    //         //     this.boy_jumped = false;
-
-    //         // stop girl movement
-    //         case KeyCode.ARROW_LEFT:
-    //         case KeyCode.ARROW_RIGHT: 
-    //             this.girl_movement_direction = 0;
-    //             this.boy_animation.stop();
-    //             break;
-    //         // case KeyCode.ARROW_UP:
-    //         //         this.boy_animation.stop();
-    //     }
-    // }
 
     start() {
         this.goNextLevel();
+
+        this.boy_player = this.Player1.getComponent(Player);
+        this.girl_player = this.Player2.getComponent(Player);
+
     }
 
     update(deltaTime: number) {
 
-        // this.boy_rigid.linearVelocity = v2(this.boy_movement_direction * this.movement_speed * deltaTime, this.boy_rigid.linearVelocity.y);
-        // this.boy_position.x += this.boy_movement_direction * this.movement_speed * deltaTime;
-
-        // this.girl_rigid.linearVelocity = v2(this.girl_movement_direction * this.movement_speed * deltaTime, this.girl_rigid.linearVelocity.y);
-        // this.girl_position.x += this.girl_movement_direction * this.movement_speed * deltaTime;
+        if((this.boy_player.node_position.x >= -250 && this.boy_player.node_position.y >=-140)||
+        (this.girl_player.node_position.x >= -250 && this.girl_player.node_position.y >=-140)){
+        this.monster1_animation.play('enemies_run');
+        this.monster1_direction = this.go_left;
+    }
 
         this.monster1_rigid.linearVelocity = v2(this.monster1_direction * this.enemy_speed * deltaTime, this.monster1_rigid.linearVelocity.y);
         this.monster1_position.x += this.monster1_direction * this.enemy_speed * deltaTime;
-
-        if((this.boy_player.node.position.x >= -250 && this.boy_player.node.position.y <=-140)||
-            (this.girl_player.node.position.x >= -250 && this.girl_player.node.position.y <=-140)){
-            this.monster1_animation.play('enemies_run');
-            this.monster1_direction = this.go_left;
-        }
+        this.monster1.setPosition(this.monster1_position);
 
     }
 
@@ -159,7 +77,7 @@ export class Game_Control extends Component {
     }
 
     goNextLevel(){
-        if(this.boy_player.node_position.x >= this.exit_gate.position.x && this.girl_player.node_position.x >= this.exit_gate.position.x ){
+        if(this.boy_player.node_position.x >= this.exit_position.x && this.girl_player.node_position.x >= this.exit_position.x ){
             this.exit_effect.scheduleOnce(() =>{
                 this.exit_effect.active;
             }, 3);
@@ -167,19 +85,29 @@ export class Game_Control extends Component {
         }
     }
 
-    contactFences(){
-        let fences_collider = this.fences.getComponent(Collider2D);
-
-        if(fences_collider){
-            fences_collider.on(Contact2DType.BEGIN_CONTACT,this.onBeginContact, this);
+    contactBoyPlayer(){
+        let collider = this.boy_player.node_collider;
+        if(collider){
+            collider.on(Contact2DType.BEGIN_CONTACT,this.onBeginContact,this);
         }
     }
 
-    onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null){
-        
+    contactGirlPlayer(){
+        let collider = this.girl_player.node_collider;
+        if(collider){
+            collider.on(Contact2DType.BEGIN_CONTACT,this.onBeginContact,this);
+        }
     }
 
+    onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D,contact: IPhysics2DContact): void{
+        let otherObject = otherCollider.tag;
+        if(otherObject === 1){
+            if(selfCollider === this.boy_player.node_collider){
+                this.boy_player.node_animation.play("boy_death");
+            }else{
+                this.girl_player.node_animation.play("girl_death");
+            }
+        }
+    }
 
 }
-
-

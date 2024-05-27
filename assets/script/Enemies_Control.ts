@@ -23,8 +23,12 @@ export class Enemies_Control extends Component {
     }
 
     update(deltaTime: number) {
-        this.rigid.linearVelocity = v2(this.direction * this.enemy_speed * deltaTime, this.rigid.linearVelocity.y);
-        this.position.x += this.direction * this.enemy_speed * deltaTime;
+        if (this.rigid) {
+            // Assuming you have direction and enemy_speed properly defined
+            this.rigid.linearVelocity = v2(this.direction * this.enemy_speed * deltaTime, this.rigid.linearVelocity.y);
+        } else {
+            console.error('RigidBody2D is undefined');
+        }
     }
 
     

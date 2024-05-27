@@ -5,9 +5,9 @@ import { Enemies_Control } from './Enemies_Control';
 
 @ccclass('Game_Control')
 export class Game_Control extends Component {
-    @property({type:Node})PlayerBoy:Player;
-    @property({type:Node})PlayerGirl:Player;
-    @property({type:Node})monster:Enemies_Control;
+    @property({type:Player})PlayerBoy:Player;
+    @property({type:Player})PlayerGirl:Player;
+    @property({type:Enemies_Control})monster:Enemies_Control;
     @property({type:Label}) boy_label : Label;
     @property({type:Label}) girl_label : Label;
     @property({type:Node}) exit_gate : Node;
@@ -20,12 +20,12 @@ export class Game_Control extends Component {
     exit_position = new Vec3(2970,-140,0);
 
     onLoad(){
-        this.goNextLevel();
         this.boy_label.node.active = false;
         this.girl_label.node.active = false;
+        this.showLabel();
         this.fences.active = false;
         this.exit_effect = new ParticleSystem2D;
-        this.showLabel(this.boy_label,this.girl_label);
+
     }
 
 
@@ -34,15 +34,15 @@ export class Game_Control extends Component {
     }
 
     update(deltaTime: number) {
-        let distanceXBoy = Math.abs(this.PlayerBoy.node_position.x - this.monster.position.x)
-        let distanceXGirl = Math.abs(this.PlayerGirl.node_position.x - this.monster.position.x)
+        // let distanceXBoy = Math.abs(this.PlayerBoy.node_position.x - this.monster.position.x)
+        // let distanceXGirl = Math.abs(this.PlayerGirl.node_position.x - this.monster.position.x)
 
-        if(distanceXBoy < 150 || distanceXGirl < 150){
-            this.monster.direction = -1 ;
-        }
+        // if(distanceXBoy < 150 || distanceXGirl < 150){
+        //     this.monster.direction = -1 ;
+        // }
     }
 
-    showLabel(boy_text: Label,girl_text: Label){
+    showLabel(){
         this.boy_label.node.active = true;
         this.girl_label.node.active = true;
         this.scheduleOnce(() => {
@@ -51,21 +51,4 @@ export class Game_Control extends Component {
         }, 3);
     }
 
-    goNextLevel(){
-        if(this.PlayerBoy.node_position.x >= this.exit_position.x && this.PlayerGirl.node_position.x >= this.exit_position.x ){
-            this.exit_effect.scheduleOnce(() =>{
-                this.exit_effect.active;
-            }, 3);
-            director.loadScene('Stage2');
-        }
-    }
-
-    // enable contact listener
-
-    showFences(){
-        if((this.PlayerBoy.node_position.x === this.fences.position.x && this.PlayerBoy.node_position.y === this.fences.position.y)||
-            (this.PlayerGirl.node_position.x === this.fences.position.x && this.PlayerGirl.node_position.y === this.fences.position.y)){
-            this.fences.active = true;
-        }
-    }
 }

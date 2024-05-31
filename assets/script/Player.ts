@@ -21,7 +21,7 @@ export class Player extends Component {
         input.on(Input.EventType.KEY_UP,this.onKeyUp,this);
         // inisialisasi variabel
         this.movement_speed = 500;
-        this.jump_height = 15000;
+        this.jump_height = 11000;
         this.setStartPosition();
         this.node_animation = this.node.getComponent(Animation);
         this.node_rigid = this.node.getComponent(RigidBody2D);

@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Vec3, Label, ParticleSystem2D } from 'cc';
-const { ccclass, property } = _decorator;
+let { ccclass, property } = _decorator;
 import { Player } from './Player';
 import { Enemies_Control } from './Enemies_Control';
 
@@ -48,11 +48,12 @@ export class Game_Control extends Component {
     }
 
     start() {
-        // Add any start logic if needed
+
     }
 
     update(deltaTime: number) {
         this.showFences();
+        this.enemyMoves(deltaTime);
     }
 
     showLabel() {
@@ -66,16 +67,13 @@ export class Game_Control extends Component {
 
     showFences() {
         if (this.PlayerBoy && this.fences) {
-            const playerPos = this.PlayerBoy.node.getPosition();
-            const fencePos = this.fences.getPosition();
-            const distance = playerPos.subtract(fencePos).length();
-            const threshold = 100; // Define a suitable distance threshold
-
-            console.log(`Player Position: ${playerPos.toString()}`);
-            console.log(`Fence Position: ${fencePos.toString()}`);
-            console.log(`Distance: ${distance}`);
-
-            if (distance < threshold) {
+            let boyPos = this.PlayerBoy.node.getPosition();
+            let girlPos = this.PlayerGirl.node.getPosition();
+            let fencePos = this.fences.getPosition();
+            let boydistance = boyPos.subtract(fencePos).length();
+            let girldistance = girlPos.subtract(fencePos).length();
+            let threshold = 100; // Define a suitable distance threshold
+            if (boydistance < threshold || girldistance < threshold) {
                 this.fences.active = true;
                 console.log("Fence is now active");
             } else {
@@ -85,4 +83,40 @@ export class Game_Control extends Component {
             console.error("PlayerBoy or fences is not assigned");
         }
     }
+
+    enemyMoves(deltaTime : number) {
+        if (this.PlayerBoy && this.PlayerGirl && this.monster) {
+            let boyPos = this.PlayerBoy.node.getPosition();
+            let girlPos = this.PlayerGirl.node.getPosition();
+            let monsterPos = this.monster.node.getPosition();
+    
+            let boyDistanceX = Math.abs(boyPos.x - monsterPos.x);
+            let girlDistanceX = Math.abs(girlPos.x - monsterPos.x);
+    
+            let threshold = 200; // Define a suitable distance threshold
+    
+            if (!this.monster.isMoving) {
+                if (boyDistanceX < threshold || girlDistanceX < threshold) {
+                    if (boyPos.x < monsterPos.x || girlPos.x < monsterPos.x) {
+                        this.monster.direction = -1; // Move left
+                    } 
+                    if (boyPos.x > monsterPos.x || girlPos.x > monsterPos.x) {
+                        this.monster.direction = 1; // Move right
+                    }
+                    this.monster.animation.play("enemies_run");
+                    this.monster.isMoving = true; // Set moving flag
+                    console.log("Monster is now walking");
+                }
+            }
+    
+            // Update monster position based on direction
+            if (this.monster.isMoving) {
+                const moveSpeed = 100 * this.monster.direction * deltaTime;
+                this.monster.node.setPosition(monsterPos.x + moveSpeed, monsterPos.y, monsterPos.z);
+            }
+        } else {
+            console.error("PlayerBoy, PlayerGirl, or monster is not assigned");
+        }
+    }
+    
 }

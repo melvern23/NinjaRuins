@@ -34,12 +34,12 @@ export class Game_Control extends Component {
     }
 
     update(deltaTime: number) {
-        // let distanceXBoy = Math.abs(this.PlayerBoy.node_position.x - this.monster.position.x)
-        // let distanceXGirl = Math.abs(this.PlayerGirl.node_position.x - this.monster.position.x)
+        let distanceXBoy = Math.abs(this.PlayerBoy.node_position.x - this.monster.position.x)
+        let distanceXGirl = Math.abs(this.PlayerGirl.node_position.x - this.monster.position.x)
 
-        // if(distanceXBoy < 150 || distanceXGirl < 150){
-        //     this.monster.direction = -1 ;
-        // }
+        if(distanceXBoy < 150 || distanceXGirl < 150){
+            this.monster.direction = -1 ;
+        }
     }
 
     showLabel(){

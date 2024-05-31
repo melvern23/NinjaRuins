@@ -13,21 +13,19 @@ export class Enemies_Control extends Component {
     animation:Animation;
 
     onLoad(){
-        this.monster.setPosition(this.position);
+        
         this.animation = this.monster.getComponent(Animation);
         this.collide = this.monster.getComponent(Collider2D);
         this.rigid = this.monster.getComponent(RigidBody2D);
     }
     start() {
-
+        this.monster.setPosition(this.position);
     }
 
     update(deltaTime: number) {
         if (this.rigid) {
             // Assuming you have direction and enemy_speed properly defined
             this.rigid.linearVelocity = v2(this.direction * this.enemy_speed * deltaTime, this.rigid.linearVelocity.y);
-        } else {
-            console.error('RigidBody2D is undefined');
         }
     }
 

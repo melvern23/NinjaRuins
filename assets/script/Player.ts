@@ -1,4 +1,4 @@
-import { _decorator, Animation, BoxCollider2D, CCInteger, CCString, Collider2D, Component, Contact2DType, EventKeyboard, Input, input, instantiate, IPhysics2DContact, KeyCode, Node, RigidBody2D, v2, Vec3 } from 'cc';
+import { _decorator, Animation, BoxCollider2D, CCInteger, CCString, Collider2D, Component, Contact2DType, director, EventKeyboard, Input, input, instantiate, IPhysics2DContact, KeyCode, Node, RigidBody2D, v2, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Player')
@@ -15,7 +15,6 @@ export class Player extends Component {
     node_position = new Vec3;
     node_animation : Animation;
     node_rigid : RigidBody2D;
-    node_collider : BoxCollider2D;
 
     onLoad(){
         input.on(Input.EventType.KEY_DOWN,this.onKeyDown,this);
@@ -27,11 +26,18 @@ export class Player extends Component {
         
         this.node_animation = this.node.getComponent(Animation);
         this.node_rigid = this.node.getComponent(RigidBody2D);
-        this.node_collider = this.node.getComponent(BoxCollider2D);
     }
 
     start(){
-        this.contactPlayer();
+        let collider = this.getComponent(Collider2D);
+
+        if (!collider) {
+            console.error("Collider component not found on player node.");
+            return;
+        }
+        if(collider){
+            collider.on(Contact2DType.BEGIN_CONTACT,this.onBeginContact,this);
+        }
     }
 
     onKeyDown(event: EventKeyboard){
@@ -111,20 +117,11 @@ export class Player extends Component {
         this.player.setPosition(this.node_position);
     }
 
-    contactPlayer(){
-        let collider = this.node_collider;
-
-        if (!this.node_collider) {
-            console.error("Collider component not found on player node.");
-            return;
-        }
-        if(collider){
-            collider.on(Contact2DType.BEGIN_CONTACT,this.onBeginContact,this);
-        }
-    }
-
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D,contact: IPhysics2DContact | null){
-        console.log("tabrak");
+        if(otherCollider.tag = 1){
+
+        }else console.log("menabrak object");
+        
     }
 }
 

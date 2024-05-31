@@ -23,7 +23,6 @@ export class Player extends Component {
         this.movement_speed = 500;
         this.jump_height = 15000;
         this.setStartPosition();
-        
         this.node_animation = this.node.getComponent(Animation);
         this.node_rigid = this.node.getComponent(RigidBody2D);
     }
@@ -122,6 +121,9 @@ export class Player extends Component {
 
         }else console.log("menabrak object");
         
+    }
+    getPosition(){
+        return this.player.getPosition();
     }
 }
 

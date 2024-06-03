@@ -66,7 +66,7 @@ export class Game_Control extends Component {
     }
 
     showFences() {
-        if (this.PlayerBoy && this.fences) {
+        if (this.PlayerBoy && this.PlayerGirl && this.fences) {
             let boyPos = this.PlayerBoy.node.getPosition();
             let girlPos = this.PlayerGirl.node.getPosition();
             let fencePos = this.fences.getPosition();
@@ -107,12 +107,6 @@ export class Game_Control extends Component {
                     this.monster.isMoving = true; // Set moving flag
                     console.log("Monster is now walking");
                 }
-            }
-    
-            // Update monster position based on direction
-            if (this.monster.isMoving) {
-                const moveSpeed = 100 * this.monster.direction * deltaTime;
-                this.monster.node.setPosition(monsterPos.x + moveSpeed, monsterPos.y, monsterPos.z);
             }
         } else {
             console.error("PlayerBoy, PlayerGirl, or monster is not assigned");

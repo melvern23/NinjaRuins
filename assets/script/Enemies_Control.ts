@@ -23,7 +23,9 @@ export class Enemies_Control extends Component {
     }
 
     update(deltaTime: number) {
-            this.rigid.linearVelocity = v2(this.direction * this.enemy_speed * deltaTime, this.rigid.linearVelocity.y);
+            if(this.isMoving){
+                this.rigid.linearVelocity = v2(this.direction * this.enemy_speed * deltaTime, this.rigid.linearVelocity.y);
+            }
             if(this.direction != 0){
                 this.isMoving = true;
             }

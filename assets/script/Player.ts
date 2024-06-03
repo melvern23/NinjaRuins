@@ -117,9 +117,9 @@ export class Player extends Component {
     }
 
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D,contact: IPhysics2DContact | null){
-        if(otherCollider.tag = 1){
-
-        }else console.log("menabrak object");
+        if(otherCollider.tag == 3){
+            console.log("menabrak obstacle")
+        }else console.log("bersentuhan dengan benda biasa");
         
     }
     getPosition(){

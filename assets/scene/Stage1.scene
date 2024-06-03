@@ -54,7 +54,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 187
+      "__id__": 191
     },
     "_id": "d7537c1e-8947-494b-a1ab-bf7febc24c92"
   },
@@ -3537,6 +3537,8 @@
     "monster": {
       "__id__": 73
     },
+    "PlayerBoy": null,
+    "PlayerGirl": null,
     "_id": "2ceGgpwgtP97LVE8Z58qi4"
   },
   {
@@ -6874,6 +6876,12 @@
       },
       {
         "__id__": 185
+      },
+      {
+        "__id__": 187
+      },
+      {
+        "__id__": 189
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -6960,27 +6968,71 @@
     ]
   },
   {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 72
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "PlayerBoy"
+    ],
+    "target": {
+      "__id__": 6
+    },
+    "targetInfo": {
+      "__id__": 188
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "c6kSQnFDZIsLWXIJrVcejg"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 72
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "PlayerGirl"
+    ],
+    "target": {
+      "__id__": 8
+    },
+    "targetInfo": {
+      "__id__": 190
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "6f0iZCt/VKNpgXqxvf5BwS"
+    ]
+  },
+  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 188
-    },
-    "shadows": {
-      "__id__": 189
-    },
-    "_skybox": {
-      "__id__": 190
-    },
-    "fog": {
-      "__id__": 191
-    },
-    "octree": {
       "__id__": 192
     },
-    "skin": {
+    "shadows": {
       "__id__": 193
     },
-    "lightProbeInfo": {
+    "_skybox": {
       "__id__": 194
+    },
+    "fog": {
+      "__id__": 195
+    },
+    "octree": {
+      "__id__": 196
+    },
+    "skin": {
+      "__id__": 197
+    },
+    "lightProbeInfo": {
+      "__id__": 198
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

@@ -53,7 +53,6 @@ export class Game_Control extends Component {
 
     update(deltaTime: number) {
         this.showFences();
-        this.enemyMoves(deltaTime);
     }
 
     showLabel() {
@@ -84,33 +83,6 @@ export class Game_Control extends Component {
         }
     }
 
-    enemyMoves(deltaTime : number) {
-        if (this.PlayerBoy && this.PlayerGirl && this.monster) {
-            let boyPos = this.PlayerBoy.node.getPosition();
-            let girlPos = this.PlayerGirl.node.getPosition();
-            let monsterPos = this.monster.node.getPosition();
-    
-            let boyDistanceX = Math.abs(boyPos.x - monsterPos.x);
-            let girlDistanceX = Math.abs(girlPos.x - monsterPos.x);
-    
-            let threshold = 200; // Define a suitable distance threshold
-    
-            if (!this.monster.isMoving) {
-                if (boyDistanceX < threshold || girlDistanceX < threshold) {
-                    if (boyPos.x < monsterPos.x || girlPos.x < monsterPos.x) {
-                        this.monster.direction = -1; // Move left
-                    } 
-                    if (boyPos.x > monsterPos.x || girlPos.x > monsterPos.x) {
-                        this.monster.direction = 1; // Move right
-                    }
-                    this.monster.animation.play("enemies_run");
-                    this.monster.isMoving = true; // Set moving flag
-                    console.log("Monster is now walking");
-                }
-            }
-        } else {
-            console.error("PlayerBoy, PlayerGirl, or monster is not assigned");
-        }
-    }
+
     
 }

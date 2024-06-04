@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, Label, ParticleSystem2D } from 'cc';
+import { _decorator, Component, Node, Vec3, Label, ParticleSystem2D, Button, director } from 'cc';
 let { ccclass, property } = _decorator;
 import { Player } from './Player';
 import { Enemies_Control } from './Enemies_Control';
@@ -13,6 +13,9 @@ export class Game_Control extends Component {
     @property({ type: Node }) exit_gate: Node ;
     @property({ type: Node }) fences1: Node ;
     @property({ type: Node }) fences2: Node ;
+    @property({ type: Node }) popUpGameOver: Node;
+    @property({ type: Button }) RetryButton: Button;
+
 
 
     exit_effect: ParticleSystem2D;
@@ -49,8 +52,8 @@ export class Game_Control extends Component {
         this.showLabel();
         this.fences1.active = false;
         this.fences2.active = false;
+        this.popUpGameOver.active = false;
         this.exit_effect = new ParticleSystem2D();
-
         console.log("onLoad completed successfully");
     }
 
@@ -60,6 +63,7 @@ export class Game_Control extends Component {
 
     update(deltaTime: number) {
         this.showfences();
+        this.gameOver();
     }
 
     showLabel() {
@@ -106,6 +110,15 @@ export class Game_Control extends Component {
     }
 
     gameOver(){
-        
+        if(this.PlayerBoy.isCollide || this.PlayerGirl.isCollide){
+            this.popUpGameOver.active = true;
+            console.log("Gameover");
+            this.RetryButton.node.on(Button.EventType.CLICK,this.retryClicked,this);
+            
+        }
+    }
+
+    retryClicked(button: Button){
+        director.loadScene("Stage1");
     }
 }

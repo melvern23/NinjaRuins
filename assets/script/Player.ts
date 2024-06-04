@@ -1,4 +1,4 @@
-import { _decorator, Animation, BoxCollider2D, CCInteger, CCString, Collider2D, Component, Contact2DType, director, EventKeyboard, Input, input, instantiate, IPhysics2DContact, KeyCode, Node, RigidBody2D, v2, Vec3 } from 'cc';
+import { _decorator, Animation, BoxCollider2D, CCInteger, CCString, Collider2D, Component, Contact2DType, director, EventKeyboard, Game, Input, input, instantiate, IPhysics2DContact, KeyCode, Node, RigidBody2D, TypeScript, v2, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 import { Game_Control } from './Game_Control';
 
@@ -16,7 +16,7 @@ export class Player extends Component {
     node_position = new Vec3;
     node_animation : Animation;
     node_rigid : RigidBody2D;
-    gameControl : Game_Control;
+    isCollide : boolean;
 
     onLoad(){
         input.on(Input.EventType.KEY_DOWN,this.onKeyDown,this);
@@ -27,6 +27,7 @@ export class Player extends Component {
         this.setStartPosition();
         this.node_animation = this.node.getComponent(Animation);
         this.node_rigid = this.node.getComponent(RigidBody2D);
+        this.isCollide = false;
     }
 
     start(){
@@ -121,8 +122,8 @@ export class Player extends Component {
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D,contact: IPhysics2DContact | null){
         if(otherCollider.tag == 3){
             console.log("menabrak obstacle");
-            this.gameControl.gameOver();
-
+            this.isCollide = true;
+            console.log(this.isCollide);
         }else console.log("bersentuhan dengan benda biasa");
         
     } 

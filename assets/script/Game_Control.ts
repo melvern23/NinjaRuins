@@ -5,13 +5,13 @@ import { Enemies_Control } from './Enemies_Control';
 
 @ccclass('Game_Control')
 export class Game_Control extends Component {
-    @property({ type: Player }) PlayerBoy: Player = null;
-    @property({ type: Player }) PlayerGirl: Player = null;
-    @property({ type: Enemies_Control }) monster: Enemies_Control = null;
-    @property({ type: Label }) boy_label: Label = null;
-    @property({ type: Label }) girl_label: Label = null;
-    @property({ type: Node }) exit_gate: Node = null;
-    @property({ type: Node }) fences: Node = null;
+    @property({ type: Player }) PlayerBoy: Player;
+    @property({ type: Player }) PlayerGirl: Player;
+    @property({ type: Enemies_Control }) monster: Enemies_Control;
+    @property({ type: Label }) boy_label: Label ;
+    @property({ type: Label }) girl_label: Label ;
+    @property({ type: Node }) exit_gate: Node ;
+    @property({ type: Node }) fences: Node ;
 
     exit_effect: ParticleSystem2D;
     exit_position = new Vec3(2970, -140, 0);

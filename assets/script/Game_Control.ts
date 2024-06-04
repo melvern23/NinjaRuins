@@ -11,7 +11,9 @@ export class Game_Control extends Component {
     @property({ type: Label }) boy_label: Label ;
     @property({ type: Label }) girl_label: Label ;
     @property({ type: Node }) exit_gate: Node ;
-    @property({ type: Node }) fences: Node ;
+    @property({ type: Node }) fences1: Node ;
+    @property({ type: Node }) fences2: Node ;
+
 
     exit_effect: ParticleSystem2D;
     exit_position = new Vec3(2970, -140, 0);
@@ -33,15 +35,20 @@ export class Game_Control extends Component {
             console.error("gate are not assigned in the inspector");
             return;
         }
-        if (!this.fences) {
-            console.error("fences are not assigned in the inspector");
+        if (!this.fences1) {
+            console.error("fences1 are not assigned in the inspector");
+            return;
+        }
+        if (!this.fences2) {
+            console.error("fences2 are not assigned in the inspector");
             return;
         }
 
         this.boy_label.node.active = false;
         this.girl_label.node.active = false;
         this.showLabel();
-        this.fences.active = false;
+        this.fences1.active = false;
+        this.fences2.active = false;
         this.exit_effect = new ParticleSystem2D();
 
         console.log("onLoad completed successfully");
@@ -52,7 +59,7 @@ export class Game_Control extends Component {
     }
 
     update(deltaTime: number) {
-        this.showFences();
+        this.showfences();
     }
 
     showLabel() {
@@ -64,25 +71,41 @@ export class Game_Control extends Component {
         }, 3);
     }
 
-    showFences() {
-        if (this.PlayerBoy && this.PlayerGirl && this.fences) {
-            let boyPos = this.PlayerBoy.node.getPosition();
-            let girlPos = this.PlayerGirl.node.getPosition();
-            let fencePos = this.fences.getPosition();
-            let boydistance = boyPos.subtract(fencePos).length();
-            let girldistance = girlPos.subtract(fencePos).length();
+    showfences() {
+        let boyPos = this.PlayerBoy.node.getPosition();
+        let girlPos = this.PlayerGirl.node.getPosition();
+        let fencePos1 = this.fences1.getPosition();
+        let fencePos2 = this.fences2.getPosition();
+        if (this.PlayerBoy && this.PlayerGirl && this.fences1) {
+            let boydistance = boyPos.subtract(fencePos1).length();
+            let girldistance = girlPos.subtract(fencePos1).length();
             let threshold = 100; // Define a suitable distance threshold
             if (boydistance < threshold || girldistance < threshold) {
-                this.fences.active = true;
+                this.fences1.active = true;
                 console.log("Fence is now active");
             } else {
-                this.fences.active = false;
+                this.fences1.active = false;
             }
         } else {
-            console.error("PlayerBoy or fences is not assigned");
+            console.error("PlayerBoy or fences1 is not assigned");
+        }
+
+        if (this.PlayerBoy && this.PlayerGirl && this.fences2) {
+            let boydistance = boyPos.subtract(fencePos2).length();
+            let girldistance = girlPos.subtract(fencePos2).length();
+            let threshold = 100; // Define a suitable distance threshold
+            if (boydistance < threshold || girldistance < threshold) {
+                this.fences2.active = true;
+                console.log("Fence is now active");
+            } else {
+                this.fences2.active = false;
+            }
+        } else {
+            console.error("PlayerBoy or fences1 is not assigned");
         }
     }
 
-
-    
+    gameOver(){
+        
+    }
 }

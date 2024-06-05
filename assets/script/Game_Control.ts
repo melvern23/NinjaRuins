@@ -111,14 +111,20 @@ export class Game_Control extends Component {
 
     gameOver(){
         if(this.PlayerBoy.isCollide || this.PlayerGirl.isCollide){
+            if(this.PlayerBoy.node.getPosition().x > 640 || this.PlayerGirl.node.getPosition().x > 640){
+                this.popUpGameOver.setPosition(this.popUpGameOver.getPosition().x + 1280,0,0);
+                this.popUpGameOver.active = true;
+            }
             this.popUpGameOver.active = true;
+            //director.pause();
             console.log("Gameover");
             this.RetryButton.node.on(Button.EventType.CLICK,this.retryClicked,this);
-            
         }
     }
 
     retryClicked(button: Button){
+        //director.resume();
         director.loadScene("Stage1");
+        
     }
 }
